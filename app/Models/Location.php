@@ -6,12 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    use HasFactory;
-    
+    use HasFactory, Notifiable;
+
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'name',    
         'longitude',
         'latitude',
+        'radius',
     ];
 
     public function users()

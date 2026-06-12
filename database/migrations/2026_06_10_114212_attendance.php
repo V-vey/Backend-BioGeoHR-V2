@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('location_id');
-            $table->time('starting_time');
             $table->date('date');
             $table->time('time_in');
             $table->time('time_out');

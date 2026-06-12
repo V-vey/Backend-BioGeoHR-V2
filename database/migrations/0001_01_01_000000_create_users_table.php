@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('contact');
+            $table->string('contact_number');
             $table->string('password');
             $table->enum('role', ['HR', 'employee']);
             $table->string('position');
