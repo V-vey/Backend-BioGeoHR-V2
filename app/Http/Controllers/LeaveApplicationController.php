@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\LeaveApplication;
 
 class LeaveApplicationController extends Controller
 {
@@ -11,7 +12,8 @@ class LeaveApplicationController extends Controller
      */
     public function index()
     {
-        //
+        $leaveApplications = LeaveApplication::all();
+        return response()->json($leaveApplications);
     }
 
     /**
@@ -19,7 +21,26 @@ class LeaveApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required',
+            'leave_balance_id' => 'required',
+            'leave_type' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'reason' => 'required',
+            'status' => 'required',
+        ]);
+        $leaveApplication = LeaveApplication::create([
+            'user_id' => $request->user_id,
+            'leave_balance_id' => $request->leave_balance_id,
+            'leave_type' => $request->leave_type,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'reason' => $request->reason,
+            'status' => $request->status,
+        ]);
+
+        return response()->json($leaveApplication);
     }
 
     /**
@@ -35,7 +56,23 @@ class LeaveApplicationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $leaveApplication = LeaveApplication::find($id);
+
+        if (!$leaveApplication) {
+            return response()->json(['message' => 'Leave application not found'], 404);
+        }
+
+        $leaveApplication->update([
+            'user_id' => $request->user_id,
+            'leave_balance_id' => $request->leave_balance_id,
+            'leave_type' => $request->leave_type,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'reason' => $request->reason,
+            'status' => $request->status,
+        ]);
+
+        return response()->json($leaveApplication);
     }
 
     /**
@@ -43,6 +80,13 @@ class LeaveApplicationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $leaveApplication = LeaveApplication::find($id);
+
+        if (!$leaveApplication) {
+            return response()->json(['message' => 'Leave application not found'], 404);
+        }
+
+        $leaveApplication->delete();
+        return response()->json(['message' => 'Leave application deleted successfully']);
     }
 }
