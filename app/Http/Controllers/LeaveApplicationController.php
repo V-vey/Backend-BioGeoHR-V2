@@ -40,7 +40,7 @@ class LeaveApplicationController extends Controller
             'status' => $request->status,
         ]);
 
-        return response()->json($leaveApplication);
+        return response()->json($leaveApplication, 201);
     }
 
     /**
@@ -48,7 +48,13 @@ class LeaveApplicationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $leaveApplication = LeaveApplication::find($id);
+        if (!$leaveApplication) {
+            return response()->json(['message' => 'Leave application not found'], 404);
+        }
+        else {
+            return response()->json($leaveApplication);
+        }
     }
 
     /**
@@ -61,18 +67,11 @@ class LeaveApplicationController extends Controller
         if (!$leaveApplication) {
             return response()->json(['message' => 'Leave application not found'], 404);
         }
+        else{
+            $leaveApplication->update($request->all());
+            return response()->json($leaveApplication);
+        }
 
-        $leaveApplication->update([
-            'user_id' => $request->user_id,
-            'leave_balance_id' => $request->leave_balance_id,
-            'leave_type' => $request->leave_type,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'reason' => $request->reason,
-            'status' => $request->status,
-        ]);
-
-        return response()->json($leaveApplication);
     }
 
     /**
@@ -85,8 +84,9 @@ class LeaveApplicationController extends Controller
         if (!$leaveApplication) {
             return response()->json(['message' => 'Leave application not found'], 404);
         }
-
-        $leaveApplication->delete();
-        return response()->json(['message' => 'Leave application deleted successfully']);
+        else{
+            $leaveApplication->delete();
+            return response()->json(['message' => 'Leave application deleted successfully']);
+        }
     }
 }

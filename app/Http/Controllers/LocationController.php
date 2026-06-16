@@ -28,14 +28,14 @@ class LocationController extends Controller
             'radius' => 'required',
         ]);
 
-        $location = Location::create([
+        $locations = Location::create([
             'name' => $request->name,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
             'radius' => $request->radius,
         ]);
 
-        return response()->json($location);
+        return response()->json($locations, 201);
     }
 
     /**
@@ -43,7 +43,13 @@ class LocationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $locations = Location::find($id);
+        if (!$locations) {
+            return response()->json(['message' => 'Location not found'], 404);
+        }
+        else {
+            return response()->json($locations);
+        }
     }
 
     /**
@@ -51,19 +57,15 @@ class LocationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $location = Location::find($id);
-        if (!$location) {
+        $locations = Location::find($id);
+        if (!$locations) {
             return response()->json(['message' => 'Location not found'], 404);
         }
-
-        $location->update([
-            'name' => $request->name,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-            'radius' => $request->radius,
-        ]);
-
-        return response()->json($location);
+        else{
+            $locations->update($request->all());
+            return response()->json($locations);
+        }
+        
     }
 
     /**
@@ -71,12 +73,13 @@ class LocationController extends Controller
      */
     public function destroy(string $id)
     {
-        $location = Location::find($id);
-        if (!$location) {
+        $locations = Location::find($id);
+        if (!$locations) {
             return response()->json(['message' => 'Location not found'], 404);
         }
-
-        $location->delete();
+        else{
+        $locations->delete();
         return response()->json(['message' => 'Location deleted successfully']);
+        }
     }
 }

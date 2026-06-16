@@ -37,7 +37,7 @@ class SalaryController extends Controller
             'working_days_per_month' => $request->working_days_per_month,
         ]);
 
-        return response()->json($salary);
+        return response()->json($salary, 201);
     }
 
     /**
@@ -45,7 +45,12 @@ class SalaryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $salary = Salary::find($id);
+        if (!$salary) {
+            return response()->json(['message' => 'Salary record not found'], 404);
+        }else {
+            return response()->json($salary);
+        }
     }
 
     /**
@@ -57,25 +62,10 @@ class SalaryController extends Controller
 
         if (!$salary) {
             return response()->json(['message' => 'Salary record not found'], 404);
+        }else{
+            $salary->update($request->all());
+            return response()->json($salary);
         }
-
-        $request->validate([
-            'user_id' => 'required',
-            'attendance_id' => 'required',
-            'salary_basis' => 'required',
-            'working_hours_per_day' => 'required',
-            'working_days_per_month' => 'required',
-        ]);
-
-        $salary->update([
-            'user_id' => $request->user_id,
-            'attendance_id' => $request->attendance_id,
-            'salary_basis' => $request->salary_basis,
-            'working_hours_per_day' => $request->working_hours_per_day,
-            'working_days_per_month' => $request->working_days_per_month,
-        ]);
-
-        return response()->json($salary);
     }
 
     /**
@@ -87,10 +77,11 @@ class SalaryController extends Controller
 
         if (!$salary) {
             return response()->json(['message' => 'Salary record not found'], 404);
+        }else {
+            $salary->delete();
+            return response()->json(['message' => 'Salary record deleted successfully']);
         }
 
-        $salary->delete();
-
-        return response()->json(['message' => 'Salary record deleted successfully']);
+        
     }
 }

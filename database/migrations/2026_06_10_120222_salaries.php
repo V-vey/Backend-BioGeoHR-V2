@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leave_balances', function (Blueprint $table) {
+        Schema::create('salaries' , function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->integer('annual_leave')->default(0);
-            $table->integer('sick_leave')->default(0);
-            $table->integer('patternity_leave')->default(0);
-            $table->integer('unpaid_leave')->default(0);
+            $table->foreignId('attendance_id');
+            $table->decimal('salary_basis');
+            $table->integer('working_hours_per_day');
+            $table->integer('working_days_per_month');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('leaves');
+        Schema::dropIfExists('salaries');
     }
 };

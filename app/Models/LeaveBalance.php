@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 class LeaveBalance extends Model
 {
@@ -17,7 +19,7 @@ class LeaveBalance extends Model
         'user_id',
         'annual_leave',
         'sick_leave',
-        'paternity_leave',
+        'patternity_leave',
         'unpaid_leave',
     ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\LeaveBalance;
 
 class LeaveBalanceController extends Controller
 {
@@ -24,7 +25,7 @@ class LeaveBalanceController extends Controller
             'user_id' => 'required',
             'annual_leave' => 'required',
             'sick_leave' => 'required',
-            'paternity_leave' => 'required',
+            'patternity_leave' => 'required',
             'unpaid_leave' => 'required',
         ]);
 
@@ -32,11 +33,11 @@ class LeaveBalanceController extends Controller
             'user_id' => $request->user_id,
             'annual_leave' => $request->annual_leave,
             'sick_leave' => $request->sick_leave,
-            'paternity_leave' => $request->paternity_leave,
+            'patternity_leave' => $request->paternity_leave,
             'unpaid_leave' => $request->unpaid_leave,
         ]);
 
-        return response()->json($leaveBalance);
+        return response()->json($leaveBalance, 201);
     }
 
     /**
@@ -44,7 +45,14 @@ class LeaveBalanceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $leaveBalance = LeaveBalance::find($id);
+
+        if (!$leaveBalance) {
+            return response()->json(['message' => 'Leave balance record not found'], 404);
+        }
+        else {
+            return response()->json($leaveBalance);
+        }
     }
 
     /**
@@ -57,16 +65,10 @@ class LeaveBalanceController extends Controller
         if (!$leaveBalance) {
             return response()->json(['message' => 'Leave balance record not found'], 404);
         }
-
-        $leaveBalance->update([
-            'user_id' => $request->user_id,
-            'annual_leave' => $request->annual_leave,
-            'sick_leave' => $request->sick_leave,
-            'paternity_leave' => $request->paternity_leave,
-            'unpaid_leave' => $request->unpaid_leave,
-        ]);
-
-        return response()->json($leaveBalance);
+        else{
+            $leaveBalance->update($request->all());
+            return response()->json($leaveBalance);
+        }
     }
 
     /**
@@ -79,8 +81,9 @@ class LeaveBalanceController extends Controller
         if (!$leaveBalance) {
             return response()->json(['message' => 'Leave balance record not found'], 404);
         }
-
-        $leaveBalance->delete();
-        return response()->json(['message' => 'Leave balance record deleted successfully']);
+        else{
+            $leaveBalance->delete();
+            return response()->json(['message' => 'Leave balance record deleted successfully']);
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Attendance;
 
 class AttendanceController extends Controller
 {
@@ -14,7 +15,6 @@ class AttendanceController extends Controller
         $attendances = Attendance::all();
         return response()->json($attendances);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -36,7 +36,7 @@ class AttendanceController extends Controller
             'time_out' => $request->time_out,
         ]);
 
-        return response()->json($attendance);
+        return response()->json($attendance, 201);
     }
 
     /**
@@ -44,7 +44,13 @@ class AttendanceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $attendance = Attendance::find($id);
+        if (!$attendance) {
+            return response()->json(['message' => 'Attendance record not found'], 404);
+        }
+        else {
+            return response()->json($attendance);
+        }
     }
 
     /**
@@ -57,16 +63,10 @@ class AttendanceController extends Controller
         if (!$attendance) {
             return response()->json(['message' => 'Attendance record not found'], 404);
         }
-
-        $attendance->update([
-            'user_id' => $request->user_id,
-            'location_id' => $request->location_id,
-            'date' => $request->date,
-            'time_in' => $request->time_in,
-            'time_out' => $request->time_out,
-        ]);
-
-        return response()->json($attendance);
+        else{
+            $attendance->update($request->all());
+            return response()->json($attendance);
+        }
     }
 
     /**
@@ -79,8 +79,9 @@ class AttendanceController extends Controller
         if (!$attendance) {
             return response()->json(['message' => 'Attendance record not found'], 404);
         }
-
-        $attendance->delete();
-        return response()->json(['message' => 'Attendance record deleted successfully']);
+        else{
+            $attendance->delete();
+            return response()->json(['message' => 'Attendance record deleted successfully']);
+        }
     }
 }

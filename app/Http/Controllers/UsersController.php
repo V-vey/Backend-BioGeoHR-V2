@@ -51,7 +51,8 @@ class UsersController extends Controller
             'address' => $request->address,
         ]);
 
-        return response()->json($users);
+        return response()->json($users, 201);
+
     }
 
     /**
@@ -60,12 +61,13 @@ class UsersController extends Controller
     public function show(string $id)
     {
         $users = Users::find($id);
-
         if (!$users) {
             return response()->json(['message' => 'User not found'], 404);
         }
+        else {
+            return response()->json($users);
+        }
 
-        return response()->json($users);
     }
 
     /**
@@ -74,26 +76,13 @@ class UsersController extends Controller
     public function update(Request $request, string $id)
     {
         $users = Users::find($id);
-
         if (!$users) {
             return response()->json(['message' => 'User not found'], 404);
         }
-        
-        $users->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'contact_number' => $request->contact_number,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'position' => $request->position,
-            'joined_date' => $request->joined_date,
-            'contract_type' => $request->contract_type,
-            'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth,
-            'address' => $request->address,
-        ]);
-
-        return response()->json($users);
+        else{
+            $users->update($request->all());
+            return response()->json($users);
+        }
     }
 
     /**
@@ -102,13 +91,12 @@ class UsersController extends Controller
     public function destroy(string $id)
     {
         $users = Users::find($id);
-        
         if (!$users) {
             return response()->json(['message' => 'User not found'], 404);
         }
-
-        $users->delete();
-
-        return response()->json(['message' => 'User deleted successfully']);
+        else {
+            $users->delete();
+            return response()->json(['message' => 'User deleted successfully']);
+        }
     }
 }
