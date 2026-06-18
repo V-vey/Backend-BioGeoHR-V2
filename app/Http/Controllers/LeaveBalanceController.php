@@ -33,7 +33,7 @@ class LeaveBalanceController extends Controller
             'user_id' => $request->user_id,
             'annual_leave' => $request->annual_leave,
             'sick_leave' => $request->sick_leave,
-            'patternity_leave' => $request->paternity_leave,
+            'patternity_leave' => $request->patternity_leave,
             'unpaid_leave' => $request->unpaid_leave,
         ]);
 

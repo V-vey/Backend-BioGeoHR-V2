@@ -10,9 +10,9 @@ use App\Http\Controllers\LeaveBalanceController;
 use App\Http\Controllers\AttendanceController;
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 Route::apiResource('users', UsersController::class);
 
