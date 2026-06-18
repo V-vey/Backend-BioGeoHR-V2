@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('date');
             $table->time('time_in');
             $table->time('time_out');
+            $table->decimal('latitude');
+            $table->decimal('longitude');
             $table->timestamps();
         });
     }

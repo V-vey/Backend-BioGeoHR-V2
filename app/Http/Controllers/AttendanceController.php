@@ -26,6 +26,8 @@ class AttendanceController extends Controller
             'date' => 'required|date',
             'time_in' => 'required',
             'time_out' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required'
         ]);
 
         $attendance = Attendance::create([
@@ -34,6 +36,8 @@ class AttendanceController extends Controller
             'date' => $request->date,
             'time_in' => $request->time_in,
             'time_out' => $request->time_out,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude
         ]);
 
         return response()->json($attendance, 201);
