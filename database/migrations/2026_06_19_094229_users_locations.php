@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('users_locations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('location_id');
-            $table->foreignId('attendance_id');
             $table->decimal('longitude');
             $table->decimal('latitude');
             $table->timestamps();
