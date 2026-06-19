@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\UserLocation;
+use App\Models\UserLocation;
 
 class UserLocationController extends Controller
 {
@@ -60,7 +60,7 @@ class UserLocationController extends Controller
     {
         $userLocation = UserLocation::find($id);
         if (!$userLocation){
-            return response -> json(['message' => 'User not Found'], 404);
+            return response() -> json(['message' => 'User not Found'], 404);
         } else {
             $userLocation -> update($request->all());
             return response()->json($userLocation);

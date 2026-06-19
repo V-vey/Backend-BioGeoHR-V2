@@ -10,7 +10,7 @@ class GeoFenceService
         // latitude and longitude 2 is the location of the employee
 
         $piValue = M_PI; // pi valuee
-        $earthRadiusM = 6371000; // in meters
+        $earthRadius = 6371000; // in meters
         $earthRadiusKm = $earthRadius / 1000; // in Km
 
         $radiansLat1 =  $lat1 * ($piValue / 180);
@@ -34,7 +34,7 @@ class GeoFenceService
         $sqrtFormula = sqrt($formula);
         $arcsin = asin($sqrtFormula);
 
-        $twoR = 2 * $earthRadiusKm; // change if its km or meter
+        $twoR = 2 * $earthRadius; // change if its km or meter
 
         $finalFormula = $twoR * $arcsin;
 

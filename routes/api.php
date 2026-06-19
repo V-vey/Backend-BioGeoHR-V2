@@ -8,6 +8,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LeaveApplicationController;
 use App\Http\Controllers\LeaveBalanceController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\UserLocationController;
+use App\Http\Controllers\Feature\GeoFenceController;
 
 
 // Route::get('/user', function (Request $request) {
@@ -25,3 +27,7 @@ Route::apiResource('leave', LeaveApplicationController::class);
 Route::apiResource('balance', LeaveBalanceController::class);
 
 Route::apiResource('attendance', AttendanceController::class);
+
+Route::apiResource('userl', UserLocationController::class);
+
+Route::get('testing/{id}', [GeoFenceController::class, 'validationLocation']);

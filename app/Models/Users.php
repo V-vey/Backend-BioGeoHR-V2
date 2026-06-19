@@ -58,6 +58,10 @@ class Users extends Authenticatable
     {
         return $this->hasMany(Attendance::class);
     }
+    public function userLocation()
+    {
+        return $this->hasMany(UserLocation::class);
+    }
     public function leaveApplication()
     {
         return $this->hasMany(LeaveApplication::class);

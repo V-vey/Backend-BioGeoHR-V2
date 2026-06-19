@@ -18,11 +18,10 @@ class Attendance extends Model
     protected $fillable = [
         'user_id',
         'location_id',
+        'user_location_id',
         'date',
         'time_in',
-        'time_out',
-        'latitude',
-        'longitude'
+        'time_out'
     ];
 
     public function user()
@@ -36,5 +35,9 @@ class Attendance extends Model
     public function salary()
     {
         return $this->hasMany(Salary::class);
+    }
+    public function userLocation()
+    {
+        return $this->hasOne(UserLocation::class);
     }
 }

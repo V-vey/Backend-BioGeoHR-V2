@@ -23,21 +23,19 @@ class AttendanceController extends Controller
         $request->validate([
             'user_id' => 'required',
             'location_id' => 'required',
+            'user_location_id' => 'required',
             'date' => 'required|date',
             'time_in' => 'required',
-            'time_out' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
+            'time_out' => 'required'
         ]);
 
         $attendance = Attendance::create([
             'user_id' => $request->user_id,
             'location_id' => $request->location_id,
+            'user_location_id' => $request->user_location_id,
             'date' => $request->date,
             'time_in' => $request->time_in,
-            'time_out' => $request->time_out,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude
+            'time_out' => $request->time_out
         ]);
 
         return response()->json($attendance, 201);
