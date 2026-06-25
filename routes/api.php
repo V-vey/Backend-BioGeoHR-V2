@@ -2,13 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\SalaryController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\LeaveApplicationController;
-use App\Http\Controllers\LeaveBalanceController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\UserLocationController;
+
+//API
+use App\Http\Controllers\API\UsersController;
+use App\Http\Controllers\API\SalaryController;
+use App\Http\Controllers\API\LocationController;
+use App\Http\Controllers\API\LeaveApplicationController;
+use App\Http\Controllers\API\LeaveBalanceController;
+use App\Http\Controllers\API\AttendanceController;
+use App\Http\Controllers\API\UserLocationController;
+
+//Auth
+use App\Http\Controllers\Auth\LoginAuthController;
+
+//Feature
 use App\Http\Controllers\Feature\GeoFenceController;
 
 
@@ -30,4 +37,4 @@ Route::apiResource('attendance', AttendanceController::class);
 
 Route::apiResource('userl', UserLocationController::class);
 
-Route::get('testing/{id}', [GeoFenceController::class, 'validationLocation']);
+Route::post('testing', [LoginAuthController::class, 'auth']);
