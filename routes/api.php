@@ -37,4 +37,6 @@ Route::apiResource('attendance', AttendanceController::class);
 
 Route::apiResource('userl', UserLocationController::class);
 
-Route::post('testing', [LoginAuthController::class, 'auth']);
+Route::post('login', [LoginAuthController::class, 'auth']);
+
+Route::post('geofence', [GeoFenceController::class], 'validationLocation');
