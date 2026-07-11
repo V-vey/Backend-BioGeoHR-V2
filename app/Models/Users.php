@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Laravel\Sanctum\HasApiTokens;
+
 class Users extends Authenticatable
 {
+    use HasApiTokens;
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
@@ -56,22 +59,22 @@ class Users extends Authenticatable
     }
     public function attendance()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Attendance::class, 'user_id', 'id');
     }
     public function userLocation()
     {
-        return $this->hasMany(UserLocation::class);
+        return $this->hasMany(UserLocation::class, 'user_id', 'id');
     }
     public function leaveApplication()
     {
-        return $this->hasMany(LeaveApplication::class);
+        return $this->hasMany(LeaveApplication::class, 'user_id', 'id');
     }
     public function salary()
     {
-        return $this->hasOne(Salary::class);
+        return $this->hasOne(Salary::class, 'user_id', 'id');
     }
     public function leaveBalance()
     {
-        return $this->hasOne(LeaveBalance::class);
+        return $this->hasOne(LeaveBalance::class, 'user_id', 'id');
     }
 }

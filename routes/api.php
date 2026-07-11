@@ -23,7 +23,7 @@ use App\Http\Controllers\Feature\GeoFenceController;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::apiResource('users', UsersController::class);
+    Route::apiResource('users', UsersController::class);
 
 Route::apiResource('salary', SalaryController::class);
 
@@ -39,4 +39,4 @@ Route::apiResource('userl', UserLocationController::class);
 
 Route::post('login', [LoginAuthController::class, 'auth']);
 
-Route::post('geofence', [GeoFenceController::class], 'validationLocation');
+Route::post('geofence', [GeoFenceController::class, 'validationLocation']);
