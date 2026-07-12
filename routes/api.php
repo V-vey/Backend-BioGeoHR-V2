@@ -19,24 +19,25 @@ use App\Http\Controllers\Auth\LoginAuthController;
 use App\Http\Controllers\Feature\GeoFenceController;
 
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
-    Route::apiResource('users', UsersController::class);
-
-Route::apiResource('salary', SalaryController::class);
-
-Route::apiResource('location', LocationController::class);
-
-Route::apiResource('leave', LeaveApplicationController::class);
-
-Route::apiResource('balance', LeaveBalanceController::class);
-
-Route::apiResource('attendance', AttendanceController::class);
-
-Route::apiResource('userl', UserLocationController::class);
-
+// Public routes
 Route::post('login', [LoginAuthController::class, 'auth']);
 
-Route::post('geofence', [GeoFenceController::class, 'validationLocation']);
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('profile', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::post('logout', [LoginAuthController::class, 'logout']);
+
+    Route::apiResource('users', UsersController::class);
+    Route::apiResource('salary', SalaryController::class);
+    Route::apiResource('location', LocationController::class);
+    Route::apiResource('leave', LeaveApplicationController::class);
+    Route::apiResource('balance', LeaveBalanceController::class);
+    Route::apiResource('attendance', AttendanceController::class);
+    Route::apiResource('userl', UserLocationController::class);
+
+    Route::post('geofence', [GeoFenceController::class, 'validationLocation']);
+});

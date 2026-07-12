@@ -21,6 +21,7 @@ class LoginAuthController extends Controller{
             $token = $this->user->createToken('Mobile')->plainTextToken;
 
             return response()->json([
+                'authenticated' => true,
                 'user' => $this->user,
                 'token' => $token
             ], 201);
@@ -42,5 +43,11 @@ class LoginAuthController extends Controller{
         
         return $this->checkPassword($request);   
     }
+    public function logout(Request $request){
+        $request->user()->currentAccessToken()->delete();
 
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
+    }
 }
