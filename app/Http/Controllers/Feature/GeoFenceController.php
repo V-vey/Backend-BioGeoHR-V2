@@ -11,28 +11,26 @@ use App\Models\Attendance;
 
 class GeoFenceController
 {
-    protected $geofence;
-    protected $userLatitude;
-    protected $userLongitude;
-    protected $locationLatitude;
-    protected $locationLongitude;
-
     public function __construct(GeoFenceService $geofence)
     {
         $this->geofence = $geofence;
 
     }
 
-    public function validationLocation(string $id){
-        $attendance = Attendance::find($id);
-        $location = Location::find($attendance->location_id);
-        $userLocation = UserLocation::find($attendance->user_location_id);
+    public function validationLocation(Request $request){
+        
+        // $request->validate([
+        //     'userLong' => 'required',
+        //     'userLat' => 'required',
+        //     'locationName' => 'required',
+        // ]);
+        $location = Location::where("name", $request->locationName)->first();
 
         $haversineCal = $this->geofence->calculateDistance(
-            $location->value('latitude'),
-            $location->value('longitude'),
-            $userLocation->value('latitude'),
-            $userLocation->value('longitude'),
+            $location->latitude,
+            $location->longitude,
+            $request->userLat,
+            $request->userLong,
         );
         return response()-> json(['message' => $haversineCal], 201);
     }

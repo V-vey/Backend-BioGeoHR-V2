@@ -9,8 +9,8 @@ class GeoFenceService
         $computation = $item * (M_PI / 180);
         return $computation;
     }
-    function calculateDistance($lat1, $long1, $lat2, $long2)
-    {
+    function calculateDistance($lat1, $long1, $lat2, $long2){   
+        
         // latitude and longitude 1 is the center of the geofence
         // latitude and longitude 2 is the location of the employee
         $earthRadius = 6371000; // in meters

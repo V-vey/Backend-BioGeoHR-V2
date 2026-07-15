@@ -46,7 +46,7 @@ class LeaveBalanceController extends Controller
      */
     public function show(string $id)
     {
-        $leaveBalance = LeaveBalance::find($id);
+        $leaveBalance = LeaveBalance::where("user_id",$id)->first();
 
         if (!$leaveBalance) {
             return response()->json(['message' => 'Leave balance record not found'], 404);

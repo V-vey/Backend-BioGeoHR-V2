@@ -33,7 +33,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('users', UsersController::class);
     Route::apiResource('salary', SalaryController::class);
-    Route::apiResource('location', LocationController::class);
     Route::apiResource('leave', LeaveApplicationController::class);
     Route::apiResource('balance', LeaveBalanceController::class);
     Route::apiResource('attendance', AttendanceController::class);
@@ -41,3 +40,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('geofence', [GeoFenceController::class, 'validationLocation']);
 });
+Route::apiResource('location', LocationController::class);
