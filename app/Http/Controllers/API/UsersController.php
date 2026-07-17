@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use Illuminate\Support\Facades\Hash;
+use App\Models\LeaveBalance;
 
 class UsersController extends Controller
 {
@@ -50,6 +51,15 @@ class UsersController extends Controller
             'gender' => $request->gender,
             'date_of_birth' => $request->date_of_birth,
             'address' => $request->address,
+        ]);
+
+        //Create a Balance
+        LeaveBalance::create([
+            'user_id' => $users->id,
+            'annual_leave' => 5,
+            'sick_leave' => 5,
+            'patternity_leave' => 7,
+            'unpaid_leave' => 9,
         ]);
 
         return response()->json($users, 201);

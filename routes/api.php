@@ -18,7 +18,7 @@ use App\Http\Controllers\Auth\LoginAuthController;
 //Feature
 use App\Http\Controllers\Feature\GeoFenceController;
 
-
+Route::apiResource('users', UsersController::class);
 // Public routes
 Route::post('login', [LoginAuthController::class, 'auth']);
 
@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [LoginAuthController::class, 'logout']);
 
-    Route::apiResource('users', UsersController::class);
+    // Route::apiResource('users', UsersController::class);
     Route::apiResource('salary', SalaryController::class);
     Route::apiResource('leave', LeaveApplicationController::class);
     Route::apiResource('balance', LeaveBalanceController::class);

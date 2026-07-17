@@ -32,6 +32,14 @@ class GeoFenceController
             $request->userLat,
             $request->userLong,
         );
-        return response()-> json(['message' => $haversineCal], 201);
+        $rad = $this->geofence->radianCal($location->radius) * 1000;
+        $mult = $location->radius * 1000; //convert to km
+        //Check if Its on Range
+        if($haversineCal <= $location->radius){
+            return response()-> json(['message' => "In Range $haversineCal :: $rad :: $mult"], 200);
+        } else {
+            return response()-> json(['message' => "Out Of Range $haversineCal :: $rad :: $mult"], 300);
+        }
+        
     }
 }
